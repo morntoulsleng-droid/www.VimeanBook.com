@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>វិមានរឿងខ្មែរ - Vimean Khmer Official Digital Bookstore</title>
+    
+    <!-- Google Fonts: Kantumruy Pro & Moul -->
+    <link href="https://fonts.googleapis.com/css2?family=Kantumruy+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Moul&display=swap" rel="stylesheet">
+    
+    <!-- Real Google Auth Client SDK -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <style>
+        :root {
+            --bg-cream: #FBF9F5;
+            --bg-surface: #FFFFFF;
+            --text-primary: #1C1917;
+            --text-secondary: #78716C;
+            --primary-accent: #8B2613;
+            --primary-hover: #6F1C0D;
+            --gold-accent: #C59B27;
+            --gold-light: #FFFBEB;
+            --border-subtle: #E7E5E4;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.12);
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        [data-theme="dark"] {
+            --bg-cream: #0C0A09;
+            --bg-surface: #1C1917;
+            --text-primary: #F5F5F4;
+            --text-secondary: #A8A29E;
+            --primary-accent: #C84027;
+            --primary-hover: #E05238;
+            --gold-accent: #D9B13B;
+            --gold-light: #262010;
+            --border-subtle: #292524;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 12px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kantumruy Pro', sans-serif; }
+        body { background: var(--bg-cream); color: var(--text-primary); transition: var(--transition); line-height: 1.6; overflow-x: hidden; }
+
+        .top-stripe { height: 5px; background: linear-gradient(90deg, var(--primary-accent), var(--gold-accent), var(--primary-accent)); width: 100%; }
+
+        /* ==========================================
+           10+ KHMER PROFESSIONAL ANIMATIONS & STYLES
+           ========================================== */
+
+        /* 1. Khmer Gold Shimmer (ពន្លឺមាសរត់ឆ្លុះចំណងជើង) */
+        @keyframes goldShimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
+        }
+        .khmer-gold-title {
+            background: linear-gradient(90deg, #b8860b 0%, #ffd700 50%, #b8860b 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: goldShimmer 4s linear infinite;
+        }
+
+        /* 2. Silk Fade & Rise (រំកិលឡើងបែបសូត្រស្រទន់) */
+        @keyframes silkRise {
+            0% { opacity: 0; transform: translateY(15px); filter: blur(3px); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+        }
+        .khmer-silk-fade {
+            animation: silkRise 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Announcement Bar */
+        .announce-bar {
+            background: var(--primary-accent); color: #FFFFFF; padding: 8px 16px;
+            font-size: 13px; text-align: center; border-bottom: 1px solid var(--gold-accent);
+            display: flex; justify-content: center; align-items: center; gap: 10px;
+            animation: silkRise 0.8s ease;
+        }
+        .announce-badge { background: var(--gold-accent); color: #000000; font-weight: 700; padding: 2px 8px; border-radius: 4px; font-size: 11px; }
+
+        /* Navbar */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 16px 8%; background: var(--bg-surface); border-bottom: 1px solid var(--border-subtle);
+            position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm);
+        }
+        .logo { font-family: 'Moul', serif; font-size: 20px; color: var(--primary-accent); display: flex; align-items: center; gap: 10px; text-decoration: none; cursor: pointer; user-select: none; }
+        .logo-tag { font-family: 'Kantumruy Pro'; font-size: 11px; font-weight: 600; color: var(--gold-accent); border: 1px solid var(--gold-accent); padding: 2px 8px; border-radius: var(--radius-sm); background: var(--gold-light); }
+
+        .search-container { position: relative; width: 280px; }
+        .search-container input {
+            width: 100%; padding: 9px 16px 9px 38px; border: 1px solid var(--border-subtle);
+            border-radius: 20px; background: var(--bg-cream); color: var(--text-primary); font-size: 13px; outline: none; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        /* 3. Subtle Border Glow (ពន្លឺស៊ុមរត់ពេល Search) */
+        @keyframes borderGlow {
+            0% { border-color: rgba(197, 155, 39, 0.2); }
+            50% { border-color: rgba(197, 155, 39, 0.9); box-shadow: 0 0 12px rgba(197, 155, 39, 0.25); }
+            100% { border-color: rgba(197, 155, 39, 0.2); }
+        }
+        .search-container input:focus { animation: borderGlow 2.5s infinite; background: var(--bg-surface); }
+        .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; stroke: var(--text-secondary); }
+
+        .nav-actions { display: flex; align-items: center; gap: 10px; }
+        
+        /* 4. Scale Smooth Hover (រីកធំទំហំស្រទន់សម្រាប់ប៊ូតុង) */
+        .btn-action-light { 
+            background: transparent; border: 1px solid var(--border-subtle); padding: 8px 14px; 
+            border-radius: var(--radius-sm); color: var(--text-primary); cursor: pointer; font-size: 13px; font-weight: 500; 
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s, color 0.3s; 
+        }
+        .btn-action-light:hover { border-color: var(--gold-accent); color: var(--gold-accent); transform: scale(1.03); }
+
+        .btn-cart {
+            background: var(--primary-accent); color: #FFFFFF; padding: 9px 18px; border-radius: var(--radius-sm);
+            border: none; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 13px; box-shadow: var(--shadow-sm);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+        }
+        .btn-cart:hover { background: var(--primary-hover); transform: scale(1.04); }
+        .cart-badge { background: var(--gold-accent); color: #000000; font-size: 11px; font-weight: 700; padding: 1px 7px; border-radius: 10px; }
+
+        /* User Profile */
+        .user-profile { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--gold-accent); }
+
+        /* Page Views */
+        .page-view { display: none; padding: 40px 8%; }
+        .page-view.active-page { display: block; }
+
+        /* 5. Page Turn Blur In (ប្តូរទំព័រចេញពីព្រិលមកច្បាស់យ៉ាងរលូន) */
+        @keyframes pageTurnIn {
+            0% { opacity: 0; filter: blur(6px); transform: scale(0.98); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1); }
+        }
+        .active-page { animation: pageTurnIn 0.5s ease forwards; }
+
+        /* Hero Banner */
+        .hero {
+            padding: 55px 8%; display: flex; align-items: center; justify-content: space-between;
+            background: linear-gradient(135deg, var(--bg-surface) 0%, var(--gold-light) 100%); 
+            border-bottom: 1px solid var(--border-subtle); margin-bottom: 35px; border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+        .hero-content { max-width: 580px; }
+        .hero-subtitle { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-accent); margin-bottom: 10px; display: block; }
+        .hero-title { font-family: 'Moul', serif; font-size: 30px; line-height: 1.6; color: var(--primary-accent); margin-bottom: 14px; }
+        .hero-description { font-size: 15px; color: var(--text-secondary); line-height: 1.7; }
+
+        /* 6. Image Zoom Ken-Burns (រូបភាពលោតល្មមៗមានជីវិតជីវា) */
+        @keyframes kenBurns {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.06); }
+            100% { transform: scale(1); }
+        }
+        .hero-svg-art { animation: kenBurns 12s ease-in-out infinite; }
+
+        /* Filter Tabs */
+        .filter-section { padding: 15px 0 28px; display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .btn-tab { 
+            padding: 8px 20px; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); 
+            background: var(--bg-surface); color: var(--text-primary); font-size: 13px; font-weight: 500; cursor: pointer; 
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+        .btn-tab:hover { transform: translateY(-2px); border-color: var(--gold-accent); }
+        .btn-tab.active { background: var(--primary-accent); color: #FFFFFF; border-color: var(--primary-accent); box-shadow: var(--shadow-sm); }
+
+        /* Catalog Grid */
+        .catalog { padding: 10px 0 70px; }
+        .section-header { text-align: center; margin-bottom: 28px; }
+        .section-title { font-family: 'Moul', serif; font-size: 22px; color: var(--primary-accent); }
+
+        .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 28px; }
+        
+        /* 7. Royal Card Float (កាតសៀវភៅអណ្តែតឡើងយ៉ាងប្រណីតពេលເອົາ Mouse ដាក់លើ) */
+        @keyframes floatRoyal {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+        .book-card {
+            background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: var(--radius-md);
+            padding: 18px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            display: flex; flex-direction: column; justify-content: space-between; position: relative;
+        }
+        .book-card:hover { 
+            animation: floatRoyal 3s ease-in-out infinite; 
+            box-shadow: var(--shadow-lg); 
+            border-color: var(--gold-accent); 
+        }
+
+        .pending-tag {
+            position: absolute; top: 12px; right: 12px; background: var(--gold-light); color: var(--gold-accent);
+            border: 1px solid var(--gold-accent); font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+        }
+
+        .cover-container { height: 180px; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; background: var(--bg-cream); border-radius: var(--radius-sm); border: 1px solid var(--border-subtle); overflow: hidden; }
+        .cover-box { 
+            width: 110px; height: 160px; border-radius: 3px 6px 6px 3px; box-shadow: var(--shadow-md); 
+            display: flex; flex-direction: column; align-items: center; justify-content: center; color: #FFFFFF; padding: 10px; text-align: center; 
+            transition: transform 0.4s ease;
+        }
+        .book-card:hover .cover-box { transform: scale(1.04) rotate(1deg); }
+        .cover-box-title { font-family: 'Moul', serif; font-size: 11px; line-height: 1.4; margin-top: 6px; }
+
+        .book-details h3 { font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+        .book-details p { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+        .publish-date { font-size: 11px; color: var(--gold-accent); font-weight: 600; margin-bottom: 10px; }
+        .book-price { font-size: 16px; font-weight: 700; color: var(--primary-accent); margin-bottom: 12px; }
+
+        .card-button-group { display: flex; gap: 8px; }
+        .btn-card-secondary { 
+            flex: 1; padding: 7px; background: transparent; border: 1px solid var(--border-subtle); 
+            border-radius: var(--radius-sm); color: var(--text-primary); font-size: 12px; cursor: pointer; transition: var(--transition); 
+        }
+        .btn-card-secondary:hover { border-color: var(--text-primary); }
+        
+        /* 8. Angkor Ripple Click (រលកពន្លឺពេលចុចប៊ូតុងជាវ) */
+        @keyframes rippleEffect {
+            0% { transform: scale(0.97); box-shadow: 0 0 0 0 rgba(139, 38, 19, 0.4); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(139, 38, 19, 0); }
+            100% { transform: scale(0.97); box-shadow: 0 0 0 0 rgba(139, 38, 19, 0); }
+        }
+        .btn-card-primary { 
+            flex: 2; padding: 7px; background: var(--primary-accent); border: none; border-radius: var(--radius-sm); 
+            color: #FFFFFF; font-size: 12px; font-weight: 600; cursor: pointer; transition: var(--transition); 
+        }
+        .btn-card-primary:active { animation: rippleEffect 0.4s ease; }
+        .btn-card-primary:hover { background: var(--primary-hover); }
+
+        /* 9. Lotus Leaf Slide (Toast លោតចូលមកពីចំហៀងយ៉ាងរលូន) */
+        @keyframes slideInRight {
+            0% { opacity: 0; transform: translateX(60px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        .toast-notification {
+            position: fixed; bottom: 24px; right: 24px; background: var(--bg-surface); border: 1px solid var(--gold-accent);
+            padding: 14px 20px; border-radius: var(--radius-md); box-shadow: var(--shadow-lg); display: none; align-items: center; gap: 12px; z-index: 1000; max-width: 340px;
+            animation: slideInRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        .toast-close-btn { cursor: pointer; border: none; background: transparent; color: var(--text-secondary); font-size: 16px; margin-left: auto; }
+
+        /* Modals & 10. Modal Pop Animation */
+        @keyframes modalScaleUp {
+            0% { opacity: 0; transform: scale(0.92) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .modal-backdrop { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55); 
+            backdrop-filter: blur(4px); display: none; justify-content: center; align-items: center; z-index: 1050; 
+        }
+        .modal-content { 
+            background: var(--bg-surface); border-radius: var(--radius-md); padding: 26px; width: 440px; max-width: 90%; 
+            border: 1px solid var(--border-subtle); box-shadow: var(--shadow-lg); position: relative; 
+            animation: modalScaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+        .modal-title { font-family: 'Moul', serif; font-size: 16px; color: var(--primary-accent); }
+        .modal-close { background: transparent; border: none; font-size: 20px; cursor: pointer; color: var(--text-secondary); transition: transform 0.2s; }
+        .modal-close:hover { transform: rotate(90deg); color: var(--primary-accent); }
+
+        .form-control { margin-bottom: 14px; }
+        .form-control label { display: block; margin-bottom: 6px; font-size: 12px; font-weight: 600; }
+        .form-control input, .form-control textarea, .form-control select {
+            width: 100%; padding: 10px 12px; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); 
+            background: var(--bg-cream); color: var(--text-primary); font-size: 13px; outline: none; transition: var(--transition);
+        }
+        .form-control input:focus, .form-control textarea:focus, .form-control select:focus {
+            border-color: var(--gold-accent); box-shadow: 0 0 0 3px rgba(197, 155, 39, 0.15); background: var(--bg-surface);
+        }
+        .btn-modal-submit { 
+            width: 100%; padding: 11px; background: var(--primary-accent); color: #FFFFFF; border: none; 
+            border-radius: var(--radius-sm); font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--transition); 
+        }
+        .btn-modal-submit:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+        /* Footer */
+        .site-footer { background: var(--bg-surface); border-top: 1px solid var(--border-subtle); padding: 48px 8% 24px; }
+        .footer-columns { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-bottom: 40px; }
+        .footer-col h4 { font-family: 'Moul', serif; font-size: 14px; color: var(--primary-accent); margin-bottom: 16px; }
+        .footer-col p, .footer-col ul li a { font-size: 13px; color: var(--text-secondary); text-decoration: none; line-height: 1.8; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: var(--gold-accent); padding-left: 4px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 8px; }
+
+        .social-link-group { display: flex; gap: 10px; margin-top: 14px; }
+        .btn-social { 
+            padding: 6px 12px; border-radius: var(--radius-sm); text-decoration: none; font-size: 12px; font-weight: 600; 
+            color: #FFFFFF; transition: transform 0.2s, opacity 0.2s; 
+        }
+        .btn-social:hover { transform: translateY(-2px); opacity: 0.9; }
+        .bg-telegram { background: #0088CC; } .bg-facebook { background: #1877F2; } .bg-instagram { background: #E4405F; }
+
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; border-top: 1px solid var(--border-subtle); padding-top: 24px; }
+        .payment-pill { background: var(--bg-cream); border: 1px solid var(--border-subtle); padding: 4px 10px; border-radius: var(--radius-sm); font-size: 11px; font-weight: 600; }
+        .certification-box { display: flex; align-items: center; gap: 10px; background: var(--gold-light); border: 1px solid var(--gold-accent); padding: 8px 14px; border-radius: var(--radius-sm); }
+        .cert-check { width: 20px; height: 20px; background: var(--primary-accent); color: #FFFFFF; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="top-stripe"></div>
+
+    <!-- Announcement Bar -->
+    <div class="announce-bar">
+        <span class="announce-badge">ផ្លូវការ</span>
+        <span>ប្រព័ន្ធកម្មង់សៀវភៅឌីជីថលរហ័សទាន់ចិត្ត និងមានសុវត្ថិភាពខ្ពស់។</span>
+    </div>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <a class="logo" id="siteLogo" onclick="handleLogoClick()">
+            វិមានរឿង <span class="logo-tag">OFFICIAL</span>
+        </a>
+
+        <!-- Live Search -->
+        <div class="search-container">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" id="searchInput" onkeyup="searchBooks()" placeholder="ស្វែងរកសៀវភៅ ឬអ្នកនិពន្ធ...">
+        </div>
+
+        <div class="nav-actions">
+            <button class="btn-action-light" onclick="openModal('requestModal')">ស្នើសុំសៀវភៅ</button>
+            <button class="btn-action-light" onclick="toggleTheme()"><span id="themeText">Night Mode</span></button>
+
+            <!-- Google OAuth Container -->
+            <div id="g_id_onload" data-client_id="YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com" data-callback="handleGoogleSignIn"></div>
+            <div id="googleBtnContainer"><div class="g_id_signin" data-type="standard" data-size="small"></div></div>
+
+            <div id="userProfileView" style="display:none;" class="user-profile">
+                <img id="userPic" class="user-avatar" src="" alt="Profile">
+                <span id="userName"></span>
+                <button onclick="googleSignOut()" style="background:none; border:none; color:var(--primary-accent); font-size:11px; cursor:pointer;">[ចាកចេញ]</button>
+            </div>
+
+            <button class="btn-cart" onclick="openCheckoutModal()">
+                កន្ត្រក <span class="cart-badge" id="cartCount">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main View -->
+    <main class="page-view active-page khmer-silk-fade" id="home">
+        <section class="hero">
+            <div class="hero-content">
+                <span class="hero-subtitle">សិល្បៈអក្សរសិល្ប៍ខ្មែរ</span>
+                <h1 class="hero-title khmer-gold-title">បណ្ណាល័យប្រលោមលោក និងសៀវភៅរឿងខ្មែរឌីជីថល</h1>
+                <p class="hero-description">ប្រមូលផ្តុំស្នាដៃសរសេរប្រកបដោយគុណភាព រួមមានប្រភេទរឿងស្នេហា ប្រលោមលោក និងរឿងរន្ធត់ ពីអ្នកនិពន្ធក្នុងស្រុក។</p>
+            </div>
+            <div class="hero-svg-art">
+                <svg width="130" height="130" viewBox="0 0 24 24" fill="none" stroke="var(--primary-accent)" stroke-width="1.2">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Filter Tabs -->
+        <div class="filter-section">
+            <button class="btn-tab active" onclick="filterCategory('all', this)">សៀវភៅទាំងអស់</button>
+            <button class="btn-tab" onclick="filterCategory('romance', this)">រឿងស្នេហា</button>
+            <button class="btn-tab" onclick="filterCategory('horror', this)">រឿងរន្ធត់</button>
+            <button class="btn-tab" onclick="filterCategory('novel', this)">ប្រលោមលោក</button>
+        </div>
+
+        <section class="catalog">
+            <div class="section-header">
+                <h2 class="section-title">សៀវភៅពេញនិយម</h2>
+            </div>
+            <div class="book-grid" id="bookGrid"></div>
+        </section>
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast-notification" id="toastBox">
+        <p id="toastMessage" style="font-size:13px; font-weight:500;">បានបន្ថែមសៀវភៅចូលក្នុងកន្ត្រក!</p>
+        <button class="toast-close-btn" onclick="closeToast()">&times;</button>
+    </div>
+
+    <!-- Official Footer -->
+    <footer class="site-footer">
+        <div class="footer-columns">
+            <div class="footer-col">
+                <h4>អំពីវិមានរឿងខ្មែរ</h4>
+                <p>បណ្ណាល័យឌីជីថលផ្លូវការប្រមូលផ្តុំស្នាដៃនិពន្ធរឿងខ្មែរ ដើម្បីលើកស្ទួយអក្សរសាស្ត្រ និងគាំទ្រអ្នកនិពន្ធក្នុងស្រុក។</p>
+                <p style="margin-top:10px;"><b>ទូរសព្ទទំនាក់ទំនង៖</b> <a href="tel:012287998" style="color:var(--primary-accent); font-weight:600;">012 287 998</a></p>
+            </div>
+
+            <div class="footer-col">
+                <h4>ព័ត៌មាន និងជំនួយ</h4>
+                <ul>
+                    <li><a href="#" onclick="openModal('feedbackModal'); return false;">ផ្ដល់មតិយោបល់ (Feedback)</a></li>
+                    <li><a href="#" onclick="alert('FAQ: លោកអ្នកអាចជ្រើសរើសសៀវភៅ រួចបំពេញព័ត៌មានដឹកជញ្ជូនជាការស្រេច។'); return false;">សំណួរញឹកញាប់ (FAQ)</a></li>
+                    <li><a href="#" onclick="alert('Privacy Policy: រាល់ព័ត៌មានផ្ទាល់ខ្លួនត្រូវបានរក្សាទុកដោយសុវត្ថិភាព។'); return false;">គោលការណ៍ឯកជនភាព</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>បណ្តាញសង្គម</h4>
+                <p>តាមដានព័ត៌មានសៀវភៅថ្មីៗតាមរយៈ៖</p>
+                <div class="social-link-group">
+                    <a href="https://t.me/VimeanBookBot" target="_blank" class="btn-social bg-telegram">Telegram</a>
+                    <a href="https://facebook.com" target="_blank" class="btn-social bg-facebook">Facebook</a>
+                    <a href="https://instagram.com" target="_blank" class="btn-social bg-instagram">Instagram</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div style="display:flex; gap:8px; align-items:center;">
+                <span style="font-size:12px; color:var(--text-secondary);">ប្រព័ន្ធទូទាត់៖</span>
+                <span class="payment-pill">ABA PayWay</span>
+                <span class="payment-pill">WING Bank</span>
+                <span class="payment-pill">Bakong</span>
+            </div>
+
+            <div class="certification-box">
+                <div class="cert-check">✓</div>
+                <div>
+                    <h5 style="font-size:12px; color:var(--primary-accent); font-weight:600;">អាជីវកម្មមានការបញ្ជាក់ត្រឹមត្រូវ</h5>
+                    <p style="font-size:11px; color:var(--text-secondary);">ចុះបញ្ជីអាជីវកម្មស្របច្បាប់</p>
+                </div>
+            </div>
+        </div>
+        <p style="text-align:center; margin-top:20px; font-size:12px; color:var(--text-secondary);">© 2026 វិមានរឿងខ្មែរ (Vimean Khmer) - រក្សាសិទ្ធិគ្រប់យ៉ាង</p>
+    </footer>
+
+    <!-- Modal: Request Book -->
+    <div class="modal-backdrop" id="requestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">ស្នើសុំសៀវភៅ</h3>
+                <button class="modal-close" onclick="closeModal('requestModal')">&times;</button>
+            </div>
+            <div class="form-control">
+                <label>ចំណងជើងសៀវភៅ / អ្នកនិពន្ធ</label>
+                <input type="text" id="reqTitle" placeholder="បញ្ចូលឈ្មោះសៀវភៅដែលចង់បាន">
+            </div>
+            <div class="form-control">
+                <label>Telegram របស់អ្នក</label>
+                <input type="text" id="reqTg" placeholder="ឧទាហរណ៍៖ @username">
+            </div>
+            <button class="btn-modal-submit" onclick="submitRequest()">បញ្ជូនសំណើ</button>
+        </div>
+    </div>
+
+    <!-- Modal: Customer Feedback -->
+    <div class="modal-backdrop" id="feedbackModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">ផ្ដល់មតិយោបល់ (Feedback)</h3>
+                <button class="modal-close" onclick="closeModal('feedbackModal')">&times;</button>
+            </div>
+            <div class="form-control">
+                <label>ឈ្មោះរបស់អ្នក</label>
+                <input type="text" id="fbName" placeholder="បញ្ចូលឈ្មោះរបស់អ្នក">
+            </div>
+            <div class="form-control">
+                <label>មតិយោបល់ ឬការវាយតម្លៃ</label>
+                <textarea id="fbText" rows="3" placeholder="សរសេរមតិរបស់អ្នកនៅទីនេះ..."></textarea>
+            </div>
+            <button class="btn-modal-submit" onclick="submitFeedback()">បញ្ជូនមតិទៅ Admin 📲</button>
+        </div>
+    </div>
+
+    <!-- Modal: Hidden Admin Panel -->
+    <div class="modal-backdrop" id="adminModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Admin Panel</h3>
+                <button class="modal-close" onclick="closeModal('adminModal')">&times;</button>
+            </div>
+            <div class="form-control">
+                <label>ចំណងជើងសៀវភៅ</label>
+                <input type="text" id="admTitle" placeholder="បញ្ចូលចំណងជើង">
+            </div>
+            <div class="form-control">
+                <label>អ្នកនិពន្ធ</label>
+                <input type="text" id="admAuthor" placeholder="បញ្ចូលឈ្មោះអ្នកនិពន្ធ">
+            </div>
+            <div class="form-control">
+                <label>តម្លៃ ($)</label>
+                <input type="number" id="admPrice" placeholder="5.00">
+            </div>
+            <div class="form-control">
+                <label>ប្រភេទសៀវភៅ</label>
+                <select id="admCategory">
+                    <option value="romance">រឿងស្នេហា</option>
+                    <option value="horror">រឿងរន្ធត់</option>
+                    <option value="novel">ប្រលោមលោក</option>
+                </select>
+            </div>
+            <button class="btn-modal-submit" onclick="addBookByAdmin()">បន្ថែមសៀវភៅ</button>
+        </div>
+    </div>
+
+    <!-- Modal: Checkout & Fast Dispatch -->
+    <div class="modal-backdrop" id="checkoutModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">បញ្ជាក់ការបញ្ជាទិញរហ័ស</h3>
+                <button class="modal-close" onclick="closeModal('checkoutModal')">&times;</button>
+            </div>
+            <div id="orderSummary" style="background:var(--gold-light); border:1px solid var(--gold-accent); padding:12px; border-radius:var(--radius-sm); margin-bottom:12px; font-size:13px;"></div>
+            
+            <div class="form-control">
+                <label>ឈ្មោះ Telegram (ឧ. @username)</label>
+                <input type="text" id="tgName" placeholder="បញ្ចូលឈ្មោះ Telegram">
+            </div>
+            <div class="form-control">
+                <label>លេខទូរសព្ទ</label>
+                <input type="text" id="phone" placeholder="បញ្ចូលលេខទូរសព្ទ">
+            </div>
+            <div class="form-control">
+                <label>ទីតាំងដឹកជញ្ជូន</label>
+                <textarea id="address" rows="2" placeholder="ផ្ទះលេខ, ផ្លូវ..."></textarea>
+            </div>
+            <button class="btn-modal-submit" onclick="sendOrderToTelegram()">បញ្ជាក់ការជាវ និងបញ្ជូនភ្លាមៗ 🚀</button>
+        </div>
+    </div>
+
+    <script>
+        const botToken = '8965797953:AAE9jkSNKmAgYBp0hYqMKCD4sev9kMmkCNM'; 
+        const chatId = '1268238197';
+
+        // Web Audio Sound FX API
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSFX(freq, type = 'sine', duration = 0.08) {
+            try {
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.00001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch(e) {}
+        }
+        function soundClick() { playSFX(550, 'sine', 0.05); }
+        function soundCart() { playSFX(750, 'triangle', 0.12); }
+
+        let books = [
+            { id: 1, title: "ស្នេហ៍ឆ្លងដែន", author: "សុភា", price: 5.00, category: "romance", date: "2026-02-15", pending: "Active (2 Months)", bg: "linear-gradient(135deg, #8B2613, #5A160A)" },
+            { id: 2, title: "ផ្ទះខ្មោចលង", author: "វិបុល", price: 4.50, category: "horror", date: "2026-03-01", pending: "Active (45 Days)", bg: "linear-gradient(135deg, #292524, #0C0A09)" },
+            { id: 3, title: "វាសនាកូនស្រី", author: "កល្យាណ", price: 6.00, category: "novel", date: "2026-01-10", pending: "Active (3 Months)", bg: "linear-gradient(135deg, #15803D, #166534)" },
+            { id: 4, title: "រាត្រីរន្ធត់", author: "វិបុល", price: 5.50, category: "horror", date: "2026-03-10", pending: "New Release (10 Days)", bg: "linear-gradient(135deg, #44403C, #1C1917)" }
+        ];
+
+        let cart = [];
+        let logoClickCount = 0;
+
+        function renderBooks(data) {
+            const grid = document.getElementById('bookGrid');
+            if(!grid) return;
+            grid.innerHTML = '';
+            data.forEach(book => {
+                grid.innerHTML += `
+                    <div class="book-card khmer-silk-fade" onmouseenter="soundClick()">
+                        <span class="pending-tag">${book.pending}</span>
+                        <div class="cover-container">
+                            <div class="cover-box" style="background: ${book.bg}">
+                                <div class="cover-box-title">${book.title}</div>
+                            </div>
+                        </div>
+                        <div class="book-details">
+                            <h3>${book.title}</h3>
+                            <p>អ្នកនិពន្ធ៖ ${book.author}</p>
+                            <div class="publish-date">📅 ថ្ងៃបង្ហោះ៖ ${book.date}</div>
+                            <div class="book-price">$${book.price.toFixed(2)}</div>
+                        </div>
+                        <div class="card-button-group">
+                            <button class="btn-card-secondary" onclick="alert('សង្ខេប៖ សាច់រឿងទាក់ទាញ និងគួរឱ្យចាប់អារម្មណ៍...')">អានគំរូ</button>
+                            <button class="btn-card-primary" onclick="addToCart('${book.title}', ${book.price})">ជាវភ្លាម</button>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Initialize Render
+        renderBooks(books);
+
+        function searchBooks() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let filtered = books.filter(b => b.title.toLowerCase().includes(input) || b.author.toLowerCase().includes(input));
+            renderBooks(filtered);
+        }
+
+        function filterCategory(cat, btn) {
+            soundClick();
+            document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if (cat === 'all') {
+                renderBooks(books);
+            } else {
+                renderBooks(books.filter(b => b.category === cat));
+            }
+        }
+
+        function addToCart(title, price) {
+            soundCart();
+            cart.push({ title, price });
+            document.getElementById('cartCount').innerText = cart.length;
+            showToast(`បានបន្ថែម "${title}" ចូលក្នុងកន្ត្រក!`);
+        }
+
+        function showToast(msg) {
+            let toast = document.getElementById('toastBox');
+            document.getElementById('toastMessage').innerText = msg;
+            toast.style.display = 'flex';
+            setTimeout(() => { toast.style.display = 'none'; }, 3500);
+        }
+
+        function closeToast() { document.getElementById('toastBox').style.display = 'none'; }
+
+        function openModal(id) { soundClick(); document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { soundClick(); document.getElementById(id).style.display = 'none'; }
+
+        function toggleTheme() {
+            soundClick();
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                html.removeAttribute('data-theme');
+                document.getElementById('themeText').innerText = 'Night Mode';
+            } else {
+                html.setAttribute('data-theme', 'dark');
+                document.getElementById('themeText').innerText = 'Day Mode';
+            }
+        }
+
+        function handleLogoClick() {
+            logoClickCount++;
+            if (logoClickCount === 3) {
+                let pass = prompt('បញ្ចូលលេខកូដ Admin៖');
+                if (pass === 'ADMIN2026') { openModal('adminModal'); } 
+                else { alert('លេខកូដមិនត្រឹមត្រូវ!'); }
+                logoClickCount = 0;
+            }
+        }
+
+        function addBookByAdmin() {
+            let title = document.getElementById('admTitle').value.trim();
+            let author = document.getElementById('admAuthor').value.trim();
+            let price = parseFloat(document.getElementById('admPrice').value);
+            let category = document.getElementById('admCategory').value;
+
+            if (!title || !author || !isNaN(price)) { // Fixed validation condition
+                if (!title || !author || isNaN(price)) { alert('សូមបំពេញព័ត៌មានឱ្យគ្រប់!'); return; }
+            }
+
+            let today = new Date().toISOString().split('T')[0];
+            let newBook = {
+                id: books.length + 1,
+                title: title,
+                author: author,
+                price: price,
+                category: category,
+                date: today,
+                pending: "New Release (Just Now)",
+                bg: "linear-gradient(135deg, #8B2613, #C59B27)"
+            };
+
+            books.unshift(newBook);
+            renderBooks(books);
+            closeModal('adminModal');
+            showToast(`បានបង្ហោះសៀវភៅ "${title}" ដោយជោគជ័យ!`);
+        }
+
+        function submitRequest() {
+            let reqTitle = document.getElementById('reqTitle').value.trim();
+            let reqTg = document.getElementById('reqTg').value.trim();
+            if (!reqTitle || !reqTg) { alert('សូមបំពេញព័ត៌មានឱ្យគ្រប់!'); return; }
+
+            sendTelegramMessage(`📥 *សំណើស្នើសុំសៀវភៅ*\n\n📖 *សៀវភៅ:* ${reqTitle}\n👤 *Telegram:* ${reqTg}`);
+            closeModal('requestModal');
+            showToast('សំណើរបស់អ្នកត្រូវបានបញ្ជូនរួចរាល់!');
+        }
+
+        function submitFeedback() {
+            let name = document.getElementById('fbName').value.trim();
+            let text = document.getElementById('fbText').value.trim();
+            if(!name || !text) { alert('សូមបំពេញឈ្មោះ និងមតិយោបល់!'); return; }
+
+            let message = `💬 *មតិយោបល់ថ្មី (Feedback)*\n\n👤 *ឈ្មោះអតិថិជន:* ${name}\n📝 *មតិយោបល់:* ${text}`;
+            sendTelegramMessage(message);
+
+            document.getElementById('fbName').value = '';
+            document.getElementById('fbText').value = '';
+            closeModal('feedbackModal');
+            showToast('អរគុណ! មតិយោបល់របស់អ្នកត្រូវបានបញ្ជូនទៅ Admin រួចរាល់!');
+        }
+
+        function openCheckoutModal() {
+            if (cart.length === 0) { alert('សូមជ្រើសរើសសៀវភៅជាមុនសិន!'); return; }
+            let summaryHTML = '<b>បញ្ជីសៀវភៅរើស៖</b><br>';
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                summaryHTML += `${index + 1}. ${item.title} - $${item.price.toFixed(2)}<br>`;
+                subtotal += item.price;
+            });
+            let total = subtotal + 2.00;
+            summaryHTML += `<hr style="margin:6px 0; border-color:var(--gold-accent);">សរុបទាំងអស់ (រួមទាំងសេវាដឹក៖ $2.00)៖ <b>$${total.toFixed(2)}</b>`;
+            document.getElementById('orderSummary').innerHTML = summaryHTML;
+            openModal('checkoutModal');
+        }
+
+        function sendOrderToTelegram() {
+            let tgName = document.getElementById('tgName').value.trim();
+            let phone = document.getElementById('phone').value.trim();
+            let address = document.getElementById('address').value.trim();
+
+            if (!tgName || !phone || !address) { alert('សូមបំពេញព័ត៌មានដឹកជញ្ជូនឱ្យគ្រប់!'); return; }
+
+            let orderText = `🛒 *ការបញ្ជាទិញសៀវភៅថ្មី!*\n\n`;
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                orderText += `${index + 1}. ${item.title} ($${item.price.toFixed(2)})\n`;
+                subtotal += item.price;
+            });
+            orderText += `\n📦 *សេវាដឹកជញ្ជូន:* $2.00\n💰 *ទឹកប្រាក់សរុប:* $${(subtotal + 2.00).toFixed(2)}\n\n`;
+            orderText += `👤 *Telegram:* ${tgName}\n📞 *ទូរសព្ទ:* ${phone}\n📍 *ទីតាំង:* ${address}`;
+
+            sendTelegramMessage(orderText);
+            cart = [];
+            document.getElementById('cartCount').innerText = '0';
+            closeModal('checkoutModal');
+            showToast('ការបញ្ជាទិញបានបញ្ជូនដោយជោគជ័យ! 🚀');
+        }
+
+        function sendTelegramMessage(text) {
+            let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(text)}&parse_mode=Markdown`;
+            fetch(url).catch(err => console.log('Telegram Error:', err));
+        }
+    </script>
+</body>
+</html>
